@@ -19,7 +19,7 @@ class GacelaAMApp extends StatelessWidget {
         title: 'Gacela',
         theme: GacelaTheme.gacelaTheme,
         routes: Routes.routes,
-        initialRoute: "/",
+        initialRoute: "/main",
       ),
     );
   }
