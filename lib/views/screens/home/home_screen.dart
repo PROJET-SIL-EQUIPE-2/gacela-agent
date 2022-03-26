@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gacela_am/views/screens/home/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../config/theme/theme.dart';
@@ -12,20 +13,23 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Home Screen"),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: GacelaTheme.hPadding),
         child: Consumer<AuthProvider>(
           builder: (ctx, auth, _) => Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Current User id = ${auth.user?.id}"),
               Center(
-                  child: gacelaButton(
-                      text: "Logout",
-                      onPressed: () async {
-                        await Provider.of<AuthProvider>(context, listen: false)
-                            .logout();
-                      })),
+                child: gacelaButton(
+                  text: "profile",
+                  onPressed: () async {
+                    await Navigator.pushNamed(context, ProfileScreen.route);
+                  },
+                ),
+              ),
             ],
           ),
         ),

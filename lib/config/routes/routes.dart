@@ -7,5 +7,6 @@ class Routes {
     Wrapper.route: (_) => const Wrapper(),
     LoginScreen.route: (_) => const LoginScreen(),
     ResetPasswordScreen.route: (_) => const ResetPasswordScreen(),
+    MainScreen.route: (_) => const MainScreen()
   };
 }
