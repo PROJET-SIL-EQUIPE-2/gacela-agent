@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gacela_am/config/theme/colors.dart';
 import 'navigators.dart';
 
 class MainScreen extends StatefulWidget {
@@ -46,16 +47,36 @@ class _MainScreenState extends State<MainScreen> {
     return WillPopScope(
       onWillPop: _systemBackButtonPressed,
       child: Scaffold(
-        bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Tasks'),
-            BottomNavigationBarItem(icon: Icon(Icons.car_rental), label: 'Cars')
-          ],
-          currentIndex: _currentIndex,
-          onTap: (index) => setState(() => _currentIndex = index),
+        bottomNavigationBar: Container(
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                offset: const Offset(0, 1),
+                blurRadius: 4,
+              )
+            ],
+            borderRadius: BorderRadius.circular(25),
+          ),
+          child: BottomNavigationBar(
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            selectedItemColor: GacelaColors.gacelaPurple,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            iconSize: 30,
+            items: const [
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.home_outlined), label: 'Home'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.checklist_sharp), label: 'Tasks'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.local_taxi_outlined), label: 'Cars')
+            ],
+            currentIndex: _currentIndex,
+            onTap: (index) => setState(() => _currentIndex = index),
+          ),
         ),
         body: SafeArea(
             child: IndexedStack(

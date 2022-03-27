@@ -109,8 +109,12 @@ Widget gacelaTextField({
   double radius = 20,
   EdgeInsetsGeometry? padding,
   int? maxLength,
+  bool enabled = true,
+  String? initialValue,
 }) =>
     TextFormField(
+      enabled: enabled,
+      initialValue: initialValue,
       maxLength: maxLength,
       controller: controller,
       onChanged: onChanged,
