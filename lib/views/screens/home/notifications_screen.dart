@@ -19,7 +19,7 @@ class NotificationsScreen extends StatelessWidget {
               labelStyle: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
               tabs: [
                 Tab(text: "Tous"),
-                Tab(text: "Non lus"),
+                Tab(text: "Urgent"),
               ]),
           elevation: 0,
           backgroundColor: Colors.white,
