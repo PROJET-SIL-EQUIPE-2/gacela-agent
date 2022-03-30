@@ -7,4 +7,6 @@ class GacelaColors {
   static const Color gacelaRed = Color(0xFFCC6666);
   static const Color gacelaDeepBlue = Color(0xFF355070);
   static const Color gacelaGreen = Color(0xFFB9F6CA);
+  static const Color gacelaPurple = Color(0xFF9586F7);
+  static const Color gacelaDarkGrey = Color.fromARGB(255, 87, 87, 87);
 }
