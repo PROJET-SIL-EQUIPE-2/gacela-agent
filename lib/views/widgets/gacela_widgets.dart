@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../config/theme/colors.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:gacela_am/config/theme/colors.dart';
+import 'package:gacela_am/config/theme/theme.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 
 Widget gacelaButton({
   required void Function()? onPressed,
@@ -251,3 +256,59 @@ Widget gacelaSuccessText({required String text}) => Container(
         ],
       ),
     );
+
+
+Widget gacelaAlertsTile(
+  {
+
+  required String title,
+  required String description,
+    double radius = 26,
+    Color containerClor = GacelaColors.gacelaLightYellow ,
+
+  void Function()? onTap,
+}) { 
+  return Container(
+      margin: const EdgeInsets.only(bottom: GacelaTheme.vDivider),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(radius),
+        color : containerClor , 
+        boxShadow: [
+                    BoxShadow( 
+                      color: Colors.grey.withOpacity(.6),
+                      offset: const Offset(
+                        5.0,
+                        5.0,
+                      ),
+                      blurRadius: 8.0,
+                      spreadRadius: 2.0,
+                    ), //BoxShadow
+                  ],
+      ),
+      child: ListTile(
+
+      onTap: onTap,
+      title: Text(title),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            description,
+            style: const TextStyle(fontSize: 12),
+          ),
+          const Text(
+            "Voir details >",
+            style: TextStyle(color: GacelaColors.gacelaBlue, fontSize: 12 , 
+            fontWeight: FontWeight.w500,
+ ),
+          )
+        ],
+      ),
+      trailing: Text(
+        "Il y a une heure",
+        style: TextStyle(color: GacelaColors.gacelaRed, fontSize: 12),
+      ),
+    ) , 
+  
+ );
+}

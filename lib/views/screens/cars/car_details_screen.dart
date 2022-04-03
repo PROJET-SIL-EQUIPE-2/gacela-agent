@@ -260,9 +260,28 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
           ),
                   ),
                   Container(
-                    child: const Center(
-                      child: Text('Tab'),
-                    ),
+                    child: ListView(
+            children: [
+              gacelaAlertsTile(
+                title: "Obstacle",
+                description:
+                    "l’automobile N05 est bloqué dans le boulevard de HASSIBA Ben Bouali rue N16 ...",
+                onTap: () {},
+              ),
+              gacelaAlertsTile(
+                title: "Obstacle",
+                description:
+                    "l’automobile N05 est bloqué dans le boulevard de HASSIBA Ben Bouali rue N16 ...",
+                onTap: () {},
+              ),
+              gacelaAlertsTile(
+                title: "Obstacle",
+                description:
+                    "l’automobile N05 est bloqué dans le boulevard de HASSIBA Ben Bouali rue N16 ...",
+                onTap: () {},
+              ),
+            ],
+          ),
                   ),
                 ],
                 controller: _tabController,

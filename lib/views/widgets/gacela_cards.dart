@@ -137,12 +137,7 @@ Widget circumstance({
         borderRadius: BorderRadius.circular(radius),
       ),
       child: ListTile(
-        leading: Container(
-          decoration: const BoxDecoration(
-            /* shape: BoxShape.circle,
-            color: Colors.white, */
-          ),
-         child: IconTheme(
+        leading:  IconTheme(
                 data: new IconThemeData(
                     color: Colors.white,
                     ), 
@@ -153,7 +148,7 @@ Widget circumstance({
                   ),
             ),
                      
-        ),
+      
         title: Text(
           title,
           style: const TextStyle(
