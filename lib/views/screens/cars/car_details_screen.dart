@@ -7,6 +7,7 @@ import 'package:gacela_am/config/theme/theme.dart';
 import 'package:gacela_am/views/screens/home/home_screen.dart';
 import '../../../config/theme/colors.dart';
 import '../../widgets.dart';
+import "package:flutter_svg/flutter_svg.dart" ;
 
 class CarDetailsScreen extends StatefulWidget {
   CarDetailsScreen({Key? key}) : super(key: key);
@@ -221,7 +222,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         circumstance(
                           title: "Obstacle",
                           description: "Barrière",
-                          icon : Icons.circle,
+                          IconName : "assets/icons/obstacle.svg",
                           onPressed : ()=> {} ,
 
                               
@@ -229,7 +230,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         circumstance(
                           title: "Pneus",
                           description: "Crevés",
-                          icon : Icons.circle,
+                           IconName : "assets/icons/pneu.svg",
                           onPressed : ()=> {} ,
 
 
@@ -238,7 +239,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         circumstance(
                           title: "En retour vers le parc",
                           description: "3 KM restants",
-                          icon : Icons.circle,
+                           IconName : "assets/icons/enRetour.svg",
                           onPressed : ()=> {} ,
 
                          
@@ -246,7 +247,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                         circumstance(
                           title: "Route",
                           description: "En circulation",
-                          icon : Icons.circle,
+                           IconName : "assets/icons/route.svg",
                           onPressed : ()=> {} ,
                          
                         ),

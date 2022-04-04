@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:gacela_am/config/theme/colors.dart';
 import 'package:gacela_am/config/theme/theme.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import "package:flutter_svg/flutter_svg.dart" ;
+
 
 Widget gacelaCard({
   Color color = GacelaColors.gacelaPurple,
@@ -118,11 +120,12 @@ Widget circumstance({
 
   
   Color cardColor: GacelaColors.gacelaPurple,
-  double radius = 26,
+  double radius = 22,
   required String title,
   required String description,
-  required IconData icon ,
-    required void Function()? onPressed,
+  required String IconName , 
+/*   required IconData icon ,
+ */    required void Function()? onPressed,
 
 
 // ignore: curly_braces_in_flow_control_structures
@@ -137,15 +140,23 @@ Widget circumstance({
         borderRadius: BorderRadius.circular(radius),
       ),
       child: ListTile(
-        leading:  IconTheme(
-                data: new IconThemeData(
+        leading:  SvgPicture.asset(
+          IconName , 
+          color: GacelaColors.gacelaDeepBlue,
+          height: 30,
+          width: 30,
+        
+                 
+
+
+               /*  data: new IconThemeData(
                     color: Colors.white,
                     ), 
                 child:  Icon(
                   icon , 
                   color: Colors.black,
                   size : 40 ,
-                  ),
+                  ), */
             ),
                      
       
