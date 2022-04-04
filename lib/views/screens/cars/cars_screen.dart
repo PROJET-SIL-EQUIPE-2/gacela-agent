@@ -25,17 +25,19 @@ class CarsScreen extends StatelessWidget {
                   child: const Icon(
                     Icons.arrow_back_ios,
                     color: GacelaColors.gacelaDeepBlue,
-                    size: 50,
+                    size: 40,
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 5),
-                  child: const Text(
-                    "Automobiles prises en \ncharges par vous",
-                    style: TextStyle(
-                      color: GacelaColors.gacelaDeepBlue,
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 5),
+                    child: const Text(
+                      "Automobiles prises en \ncharges par vous",
+                      style: TextStyle(
+                        color: GacelaColors.gacelaDeepBlue,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

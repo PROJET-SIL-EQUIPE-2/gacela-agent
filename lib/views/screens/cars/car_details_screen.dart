@@ -114,9 +114,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             Expanded(
               child: TabBarView(
                 children: [
-                  Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Column(
+                  Container( //expanded
+                       padding: const EdgeInsets.symmetric(vertical: 10.0),
+                       child: Column( //listview
                         children: [
                           Row(
                             children: [
@@ -167,43 +167,47 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                               ),
                               color: GacelaColors.gacelaGreen,
                             ),
-                          ),
+                          ) ,
 
                           // Information
-                          Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  CarInfoWidget(
-                                      infoType: "infoType",
-                                      value: "value",
-                                      unity: "unity"),
-                                  CarInfoWidget(
-                                      infoType: "infoType",
-                                      value: "value",
-                                      unity: "unity")
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: const [
-                                  CarInfoWidget(
-                                      infoType: "infoType",
-                                      value: "value",
-                                      unity: "unity"),
-                                  CarInfoWidget(
-                                      infoType: "infoType",
-                                      value: "value",
-                                      unity: "unity")
-                                ],
-                              ),
-                            ],
+                           Expanded(
+                             child: ListView(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: const [
+                                    CarInfoWidget(
+                                        infoType: "infoType",
+                                        value: "value",
+                                        unity: "unity"),
+                                    CarInfoWidget(
+                                        infoType: "infoType",
+                                        value: "value",
+                                        unity: "unity")
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Expanded(
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: const [
+                                      CarInfoWidget(
+                                          infoType: "infoType",
+                                          value: "value",
+                                          unity: "unity"),
+                                      CarInfoWidget(
+                                          infoType: "infoType",
+                                          value: "value",
+                                          unity: "unity")
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           )
                         ],
                       )),
@@ -215,7 +219,6 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                     horizontal: GacelaTheme.hPadding),
                 child: Column(
                   children: [
-                    const SizedBox(height: GacelaTheme.vDivider),
                     const SizedBox(height: GacelaTheme.vDivider),
                     Column(
                       children: [
@@ -262,7 +265,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                   ),
                   Container(
                     child: ListView(
+
             children: [
+               const SizedBox(height: GacelaTheme.vDivider),
               gacelaAlertsTile(
                 title: "Obstacle",
                 description:
