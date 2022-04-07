@@ -87,13 +87,6 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ]),
                   ),
-                  //  Text(
-                  //   "${(_globalProgress * 100).toStringAsFixed(0)}%\nCOMPLETÉ AUJOURD'HUI",
-                  //   style: const TextStyle(
-                  //       color: GacelaColors.gacelaBlue,
-                  //       fontSize: 30,
-                  //       fontWeight: FontWeight.w600),
-                  // ),
                   progressColor: GacelaColors.gacelaBlue,
                 ),
               ),

@@ -257,36 +257,34 @@ Widget gacelaSuccessText({required String text}) => Container(
       ),
     );
 
-
-Widget gacelaAlertsTile(
-  {
-
+Widget gacelaAlertsTile({
   required String title,
   required String description,
-    double radius = 26,
-    Color containerClor = GacelaColors.gacelaLightYellow ,
-
+  double radius = 26,
+  Color containerClor = GacelaColors.gacelaLightYellow,
   void Function()? onTap,
-}) { 
+}) {
   return Container(
-      margin: const EdgeInsets.only(bottom: GacelaTheme.vDivider),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(radius),
-        color : containerClor , 
-        boxShadow: [
-                    BoxShadow( 
-                      color: Colors.grey.withOpacity(.6),
-                      offset: const Offset(
-                        5.0,
-                        5.0,
-                      ),
-                      blurRadius: 8.0,
-                      spreadRadius: 2.0,
-                    ), //BoxShadow
-                  ],
-      ),
-      child: ListTile(
-
+    margin: const EdgeInsets.only(
+        bottom: GacelaTheme.vDivider,
+        left: GacelaTheme.hPadding,
+        right: GacelaTheme.hPadding),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(radius),
+      color: containerClor,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(.6),
+          offset: const Offset(
+            5.0,
+            5.0,
+          ),
+          blurRadius: 8.0,
+          spreadRadius: 2.0,
+        ), //BoxShadow
+      ],
+    ),
+    child: ListTile(
       onTap: onTap,
       title: Text(title),
       subtitle: Column(
@@ -298,9 +296,11 @@ Widget gacelaAlertsTile(
           ),
           const Text(
             "Voir details >",
-            style: TextStyle(color: GacelaColors.gacelaBlue, fontSize: 12 , 
-            fontWeight: FontWeight.w500,
- ),
+            style: TextStyle(
+              color: GacelaColors.gacelaBlue,
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+            ),
           )
         ],
       ),
@@ -308,7 +308,6 @@ Widget gacelaAlertsTile(
         "Il y a une heure",
         style: TextStyle(color: GacelaColors.gacelaRed, fontSize: 12),
       ),
-    ) , 
-  
- );
+    ),
+  );
 }

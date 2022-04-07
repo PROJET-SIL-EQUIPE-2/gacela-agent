@@ -7,7 +7,7 @@ import 'package:gacela_am/config/theme/theme.dart';
 import 'package:gacela_am/views/screens/home/home_screen.dart';
 import '../../../config/theme/colors.dart';
 import '../../widgets.dart';
-import "package:flutter_svg/flutter_svg.dart" ;
+import "package:flutter_svg/flutter_svg.dart";
 
 class CarDetailsScreen extends StatefulWidget {
   CarDetailsScreen({Key? key}) : super(key: key);
@@ -30,13 +30,9 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Les infos d'automobiles",
-          style: TextStyle(
-            color: GacelaColors.gacelaDeepBlue,
-            fontSize: 30,
-            fontWeight: FontWeight.w600,
-          ),
+          style: Theme.of(context).textTheme.headline2,
         ),
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -48,65 +44,53 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(
-          horizontal: 8.0,
+          horizontal: 0,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height / 4,
-              child: Column(
-                children: [
-                  const Text(
-                    "Hyundai classic",
-                    style: TextStyle(
-                      color: GacelaColors.gacelaDeepBlue,
-                      fontSize: 28,
-                    ),
+            Column(
+              children: [
+                Text("Hyundai classic",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: GacelaColors.gacelaDeepBlue)),
+                const SizedBox(
+                  height: 10,
+                ),
+                Center(
+                  child: Image.asset(
+                    "assets/images/car1.png",
+                    width: MediaQuery.of(context).size.width * 0.3,
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Center(
-                    child: Image.asset(
-                      "images/car1.png",
-                      height: MediaQuery.of(context).size.height / 8,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
             TabBar(
               unselectedLabelColor: GacelaColors.gacelaDeepBlue,
               labelColor: GacelaColors.gacelaDeepBlue,
+              indicatorColor: GacelaColors.gacelaDeepBlue,
               tabs: const [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
+                Tab(
                   child: Text(
                     "Informations",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
+                Tab(
                   child: Text(
-                    'Circumstances',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                    ),
+                    "Circumstances",
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
+                Tab(
                   child: Text(
-                    'Alerts',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                    ),
+                    "Alerts",
+                    style: TextStyle(fontWeight: FontWeight.w600),
                   ),
-                )
+                ),
               ],
               controller: _tabController,
               indicatorSize: TabBarIndicatorSize.tab,
@@ -114,180 +98,173 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
             Expanded(
               child: TabBarView(
                 children: [
-                  Container( //expanded
-                       padding: const EdgeInsets.symmetric(vertical: 10.0),
-                       child: Column( //listview
-                        children: [
-                          Row(
-                            children: [
-                              // ignore: todo
-                              // TODO: Change this to SVG picture
-                              Container(
-                                  margin: const EdgeInsets.only(right: 8.0),
-                                  child: const Icon(
-                                    Icons.car_rental,
-                                    color: GacelaColors.gacelaDarkGrey,
-                                  )),
-                              const Text(
-                                "23454546566677 43433",
-                                style: TextStyle(
-                                  fontSize: 20,
+                  ListView(
+                    children: [
+                      const SizedBox(height: GacelaTheme.vPadding),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: GacelaTheme.hPadding,
+                        ),
+                        child: Row(
+                          children: const [
+                            // ignore: todo
+                            // TODO: Change this to SVG picture
+                            Icon(
+                              Icons.car_rental,
+                              color: GacelaColors.gacelaDarkGrey,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              "23454546566677 43433",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: GacelaColors.gacelaDarkGrey,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: GacelaTheme.hPadding),
+                        child: Row(
+                          children: [
+                            Container(
+                                margin: const EdgeInsets.only(right: 8.0),
+                                child: const Icon(
+                                  Icons.location_on,
                                   color: GacelaColors.gacelaDarkGrey,
-                                ),
+                                )),
+                            const Text(
+                              "Sidi youcef, Beni messous",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: GacelaColors.gacelaDarkGrey,
                               ),
-                            ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Map
+
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: GacelaTheme.vDivider,
+                            horizontal: GacelaTheme.hPadding),
+                        height: MediaQuery.of(context).size.height / 5,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            20,
                           ),
-                          Row(
-                            children: [
-                              Container(
-                                  margin: const EdgeInsets.only(right: 8.0),
-                                  child: const Icon(
-                                    Icons.map,
-                                    color: GacelaColors.gacelaDarkGrey,
-                                  )),
-                              const Text(
-                                "Sidi youcef, Beni messous",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: GacelaColors.gacelaDarkGrey,
-                                ),
-                              ),
-                            ],
-                          ),
-                          // Map
-
-                          Container(
-                            margin: const EdgeInsets.symmetric(
-                              vertical: 8.0,
-                            ),
-                            height: MediaQuery.of(context).size.height / 5,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                20,
-                              ),
-                              color: GacelaColors.gacelaGreen,
-                            ),
-                          ) ,
-
-                          // Information
-                           Expanded(
-                             child: ListView(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: const [
-                                    CarInfoWidget(
-                                        infoType: "infoType",
-                                        value: "value",
-                                        unity: "unity"),
-                                    CarInfoWidget(
-                                        infoType: "infoType",
-                                        value: "value",
-                                        unity: "unity")
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Expanded(
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: const [
-                                      CarInfoWidget(
-                                          infoType: "infoType",
-                                          value: "value",
-                                          unity: "unity"),
-                                      CarInfoWidget(
-                                          infoType: "infoType",
-                                          value: "value",
-                                          unity: "unity")
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      )),
-                  Container(
-                    child: ListView(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: GacelaTheme.hPadding),
-                child: Column(
-                  children: [
-                    const SizedBox(height: GacelaTheme.vDivider),
-                    Column(
-                      children: [
-                        circumstance(
-                          title: "Obstacle",
-                          description: "Barrière",
-                          IconName : "assets/icons/obstacle.svg",
-                          onPressed : ()=> {} ,
-
-                              
+                          color: GacelaColors.gacelaGreen,
                         ),
-                        circumstance(
-                          title: "Pneus",
-                          description: "Crevés",
-                           IconName : "assets/icons/pneu.svg",
-                          onPressed : ()=> {} ,
+                      ),
+                      ///////
 
-
-                          
+                      // Information
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: GacelaTheme.hPadding),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            CarInfoWidget(
+                                infoType: "infoType",
+                                value: "value",
+                                unity: "unity"),
+                            CarInfoWidget(
+                                infoType: "infoType",
+                                value: "value",
+                                unity: "unity")
+                          ],
                         ),
-                        circumstance(
-                          title: "En retour vers le parc",
-                          description: "3 KM restants",
-                           IconName : "assets/icons/enRetour.svg",
-                          onPressed : ()=> {} ,
-
-                         
+                      ),
+                      const SizedBox(height: GacelaTheme.vDivider),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: GacelaTheme.hPadding),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: const [
+                            CarInfoWidget(
+                                infoType: "infoType",
+                                value: "value",
+                                unity: "unity"),
+                            CarInfoWidget(
+                                infoType: "infoType",
+                                value: "value",
+                                unity: "unity")
+                          ],
                         ),
-                        circumstance(
-                          title: "Route",
-                          description: "En circulation",
-                           IconName : "assets/icons/route.svg",
-                          onPressed : ()=> {} ,
-                         
-                        ),
-                        
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
+                      ),
+                      const SizedBox(height: GacelaTheme.vPadding),
+                    ],
                   ),
                   Container(
                     child: ListView(
-
-            children: [
-               const SizedBox(height: GacelaTheme.vDivider),
-              gacelaAlertsTile(
-                title: "Obstacle",
-                description:
-                    "l’automobile N05 est bloqué dans le boulevard de HASSIBA Ben Bouali rue N16 ...",
-                onTap: () {},
-              ),
-              gacelaAlertsTile(
-                title: "Obstacle",
-                description:
-                    "l’automobile N05 est bloqué dans le boulevard de HASSIBA Ben Bouali rue N16 ...",
-                onTap: () {},
-              ),
-              gacelaAlertsTile(
-                title: "Obstacle",
-                description:
-                    "l’automobile N05 est bloqué dans le boulevard de HASSIBA Ben Bouali rue N16 ...",
-                onTap: () {},
-              ),
-            ],
-          ),
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: GacelaTheme.hPadding),
+                          child: Column(
+                            children: [
+                              const SizedBox(height: GacelaTheme.vDivider),
+                              Column(
+                                children: [
+                                  circumstance(
+                                    title: "Obstacle",
+                                    description: "Barrière",
+                                    IconName: "assets/icons/obstacle.svg",
+                                    onPressed: () => {},
+                                  ),
+                                  circumstance(
+                                    title: "Pneus",
+                                    description: "Crevés",
+                                    IconName: "assets/icons/pneu.svg",
+                                    onPressed: () => {},
+                                  ),
+                                  circumstance(
+                                    title: "En retour vers le parc",
+                                    description: "3 KM restants",
+                                    IconName: "assets/icons/enRetour.svg",
+                                    onPressed: () => {},
+                                  ),
+                                  circumstance(
+                                    title: "Route",
+                                    description: "En circulation",
+                                    IconName: "assets/icons/route.svg",
+                                    onPressed: () => {},
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  ListView(
+                    children: [
+                      const SizedBox(height: GacelaTheme.vDivider),
+                      gacelaAlertsTile(
+                        title: "Obstacle",
+                        description:
+                            "l’automobile N05 est bloqué dans le boulevard de HASSIBA Ben Bouali rue N16 ...",
+                        onTap: () {},
+                      ),
+                      gacelaAlertsTile(
+                        title: "Obstacle",
+                        description:
+                            "l’automobile N05 est bloqué dans le boulevard de HASSIBA Ben Bouali rue N16 ...",
+                        onTap: () {},
+                      ),
+                      gacelaAlertsTile(
+                        title: "Obstacle",
+                        description:
+                            "l’automobile N05 est bloqué dans le boulevard de HASSIBA Ben Bouali rue N16 ...",
+                        onTap: () {},
+                      ),
+                    ],
                   ),
                 ],
                 controller: _tabController,
@@ -367,8 +344,3 @@ class CarInfoWidget extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
