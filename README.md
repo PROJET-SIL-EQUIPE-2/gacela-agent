@@ -21,12 +21,11 @@ This project is a starting point for a Flutter application.
 
 6 - run your project 'flutter run' 🎉
 
-7 - after any pull request you need to re-run the 2 instruction (in case there's some new deps)
+7 - after any pull request you need to re-run the 2 instructions (in case there's some new deps)
 
 If you have some problemes contact @NassimFatmi or @Dunya18
 
 ### Remarques: 
 - Don't push in the main branch create your own ❗
-- Use slack channel if you need help or something (messenger les messages yro7o 😂)
 - Same thing for AM application ❗❗
 - READ la charte de codage ❗❗❗
