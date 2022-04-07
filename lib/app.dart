@@ -16,12 +16,13 @@ class GacelaAMApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Gacela',
         theme: GacelaTheme.gacelaTheme,
         routes: Routes.routes,
         initialRoute: "/main",
-        debugShowCheckedModeBanner: false,
-      ),
+/*         debugShowCheckedModeBanner: false,
+ */      ),
     );
   }
 }

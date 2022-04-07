@@ -52,12 +52,15 @@ class _MainScreenState extends State<MainScreen> {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withOpacity(0.2),
                 offset: const Offset(0, 1),
                 blurRadius: 4,
               )
             ],
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(25),
+              topRight: Radius.circular(25),
+            ),
           ),
           child: BottomNavigationBar(
             showSelectedLabels: false,
