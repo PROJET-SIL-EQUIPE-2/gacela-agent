@@ -7,13 +7,10 @@ class GacelaColors {
   static const Color gacelaGrey = Color(0xFFB3B4BA);
   static const Color gacelaRed = Color(0xFFCC6666);
   static const Color gacelaDeepBlue = Color(0xFF355070);
-  static const Color gacelaGreen = Color(0xFF52E09B);
+/* <<<<<<< HEAD
+ */  static const Color gacelaGreen = Color(0xFF52E09B);
   static const Color gacelaPurple = Color(0xFFC8C9E8);
   static const Color gacelaLightPurple = Color(0xFFEFEFF5);
   static const Color gacelaYellow = Color(0xFFF2CB30);
   static const Color gacelaLightYellow = Color(0xFFFFFDE7);
-  static const Color gacelaWarnignlight = Color(0xFFFFF3E0);
-  static const Color gacelagreylight = Color(0xFFFAFAFA);
-  static const Color gacelaGreyClair = Color(0xFFD6D6D6);
-  static const Color gacelaBluelight = Color(0xFFB3E5FC);
-}
+ */}

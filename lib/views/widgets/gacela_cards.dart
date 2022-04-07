@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gacela_am/config/theme/colors.dart';
 import 'package:gacela_am/config/theme/theme.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+
 
 Widget gacelaCard({
   Color color = GacelaColors.gacelaPurple,
@@ -59,7 +59,7 @@ Widget gacelaListTile({
         ),
         child: CircularPercentIndicator(
           backgroundColor: Colors.white,
-          radius: 25,
+          radius: 20,
           lineWidth: 5.0,
           percent: progress,
           center: Text(
@@ -194,3 +194,56 @@ Widget gacelaNotificationTile({
       // ignore: prefer_const_constructors
       leading: Icon(Icons.error_outline_rounded),
     );
+
+Widget circumstance({
+  // Value between 0 and 1
+
+  Color cardColor: GacelaColors.gacelaPurple,
+  double radius = 22,
+  required String title,
+  required String description,
+  required String IconName,
+/*   required IconData icon ,
+ */
+  required void Function()? onPressed,
+
+// ignore: curly_braces_in_flow_control_structures
+}) {
+  // ignore: unnecessary_new
+  return new Container(
+    margin: const EdgeInsets.only(bottom: GacelaTheme.vDivider),
+    decoration: BoxDecoration(
+      color: cardColor,
+      borderRadius: BorderRadius.circular(radius),
+    ),
+    child: ListTile(
+      leading: SvgPicture.asset(
+        IconName,
+        color: GacelaColors.gacelaDeepBlue,
+        height: 30,
+        width: 30,
+
+        /*  data: new IconThemeData(
+                    color: Colors.white,
+                    ), 
+                child:  Icon(
+                  icon , 
+                  color: Colors.black,
+                  size : 40 ,
+                  ), */
+      ),
+      title: Text(
+        title,
+        style:
+            const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+      ),
+      subtitle: Text(
+        description,
+        overflow: TextOverflow.ellipsis,
+        style:
+            const TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+      ),
+    ),
+  );
+  // ignore: prefer_const_literals_to_create_immutables
+}
