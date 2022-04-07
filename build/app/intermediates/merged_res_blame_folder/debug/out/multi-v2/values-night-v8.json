@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Probook\\OneDrive\\Documents\\Images\\gacela-agent\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-night-v8\\values-night-v8.xml",
+            "outputFile": "D:\\PROJET_SIL\\gacela_am\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-night-v8\\values-night-v8.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Probook\\OneDrive\\Documents\\Images\\gacela-agent\\android\\app\\src\\main\\res\\values-night\\styles.xml",
+                    "source": "D:\\PROJET_SIL\\gacela_am\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

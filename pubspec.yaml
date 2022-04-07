@@ -36,7 +36,7 @@ dependencies:
   mockito: ^5.1.0
   provider: ^6.0.2
   shared_preferences: ^2.0.13
-  flutter_slidable: ^0.5.7
+  flutter_slidable: ^0.6.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -99,11 +99,11 @@ flutter:
           weight: 400
         - asset: assets/fonts/Poppins-Light.ttf
           weight: 300
- 
-    - family:  MyIcons
+
+    - family: MyIcons
       fonts:
-       - asset: assets/fonts/MyIcons.ttf
-    
+        - asset: assets/fonts/MyIcons.ttf
+
   # fonts:
   #   - family: Schyler
   #     fonts:
