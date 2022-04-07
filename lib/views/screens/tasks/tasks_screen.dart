@@ -32,14 +32,6 @@ class TasksScreen extends StatelessWidget {
             "Mes taches",
             style: Theme.of(context).textTheme.headline2,
           ),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              size: 30,
-              color: Colors.black,
-            ),
-            onPressed: () => () {},
-          ),
         ),
         body: TabBarView(children: [
           ListView(

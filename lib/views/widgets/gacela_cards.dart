@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:gacela_am/config/theme/colors.dart';
 import 'package:gacela_am/config/theme/theme.dart';
 import 'package:percent_indicator/percent_indicator.dart';
-
+import "package:flutter_svg/flutter_svg.dart";
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 Widget gacelaCard({
   Color color = GacelaColors.gacelaPurple,
