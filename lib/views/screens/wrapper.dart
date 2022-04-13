@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gacela_am/providers/auth_provider.dart';
-import 'package:gacela_am/views/screens/splash_screen.dart';
-import '../screens.dart';
 import 'package:provider/provider.dart';
+
+import '../../../providers/auth_provider.dart';
+import 'splash_screen.dart';
+import '../screens.dart';
 
 class Wrapper extends StatelessWidget {
   static const route = "/";
@@ -12,7 +13,7 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<AuthProvider>(builder: (context, auth, _) {
       if (auth.isAuth) {
-        return const HomeScreen();
+        return const MainScreen();
       } else {
         return FutureBuilder(
             future: auth.tryAutoLogin(),

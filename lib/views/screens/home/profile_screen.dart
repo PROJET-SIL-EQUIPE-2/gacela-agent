@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gacela_am/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 import 'edit_profile_screen.dart';
 import '../../../config/theme/colors.dart';
 import '../../../config/theme/theme.dart';
@@ -80,7 +82,9 @@ class ProfileScreen extends StatelessWidget {
           ),
           ListTile(
             title: const Text("Déconnexion"),
-            onTap: () {},
+            onTap: () async =>
+                await Provider.of<AuthProvider>(context, listen: false)
+                    .logout(),
           ),
         ],
       ),

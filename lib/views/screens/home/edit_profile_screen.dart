@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gacela_am/config/theme/colors.dart';
-import 'package:gacela_am/config/theme/theme.dart';
-import 'package:gacela_am/views/widgets/gacela_cards.dart';
-import 'package:gacela_am/views/widgets/gacela_widgets.dart';
+import '../../../config/theme/colors.dart';
+import '../../../config/theme/theme.dart';
+import '../../widgets.dart';
 
 class EditProfileScreen extends StatefulWidget {
   static const route = "/profile/edit";
