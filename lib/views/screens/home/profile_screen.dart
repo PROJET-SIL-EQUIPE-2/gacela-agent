@@ -32,22 +32,24 @@ class ProfileScreen extends StatelessWidget {
         children: [
           const Divider(height: 1, color: GacelaColors.gacelaGrey),
           const SizedBox(height: GacelaTheme.vDivider),
-          ListTile(
-            onTap: () async =>
-                await Navigator.pushNamed(context, EditProfileScreen.route),
-            title: Text(
-              "User's full name",
-              overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.headline2,
-            ),
-            subtitle: Text(
-              "useremail@mail.com",
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            trailing: const CircleAvatar(
-              radius: 25,
-              backgroundColor: Colors.transparent,
-              backgroundImage: NetworkImage("https://i.pravatar.cc/300"),
+          Consumer<AuthProvider>(
+            builder: (_, auth, __) => ListTile(
+              onTap: () async =>
+                  await Navigator.pushNamed(context, EditProfileScreen.route),
+              title: Text(
+                "${auth.user?.familyName} ${auth.user?.name}",
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              subtitle: Text(
+                "${auth.user?.email}",
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              trailing: const CircleAvatar(
+                radius: 25,
+                backgroundColor: Colors.transparent,
+                backgroundImage: AssetImage("assets/images/agent.png"),
+              ),
             ),
           ),
           const SizedBox(height: GacelaTheme.vDivider),

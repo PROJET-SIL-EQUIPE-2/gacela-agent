@@ -1,6 +1,10 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gacela_am/config/theme/colors.dart';
+import 'package:gacela_am/models/errors/failure.dart';
+import 'package:gacela_am/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 import 'navigators.dart';
 
 class MainScreen extends StatefulWidget {
@@ -40,6 +44,39 @@ class _MainScreenState extends State<MainScreen> {
       }
     }
     return false;
+  }
+
+  Future<void> saveTokenToDatabase(String? token) async {
+    try {
+      await Provider.of<AuthProvider>(context, listen: false)
+          .saveNotificationToken(token);
+    } on Failure catch (e) {
+      Future.delayed(const Duration(seconds: 0))
+          .then((value) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              backgroundColor: GacelaColors.gacelaRed,
+              content: Text(
+                e.message,
+                style: const TextStyle(color: Colors.white),
+              ))));
+    }
+  }
+
+  Future<void> setupToken() async {
+    // Get the token each time the application loads
+    String? token = await FirebaseMessaging.instance.getToken();
+    print(token);
+
+    // Save the initial token to the database
+    await saveTokenToDatabase(token!);
+
+    // Any time the token refreshes, store this in the database too.
+    FirebaseMessaging.instance.onTokenRefresh.listen(saveTokenToDatabase);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setupToken();
   }
 
   @override

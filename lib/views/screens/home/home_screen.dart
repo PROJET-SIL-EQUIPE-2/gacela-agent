@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gacela_am/providers/auth_provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
 
 import '../../../config/theme/colors.dart';
 import '../../../config/theme/theme.dart';
@@ -20,7 +22,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          "Bonjour agentName",
+          "Bonjour ${Provider.of<AuthProvider>(context).user?.familyName}",
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.headline2,
         ),
@@ -29,7 +31,7 @@ class HomeScreen extends StatelessWidget {
               Navigator.pushNamed(context, ProfileScreen.route),
           icon: const CircleAvatar(
             backgroundColor: Colors.transparent,
-            backgroundImage: NetworkImage("https://i.pravatar.cc/300"),
+            backgroundImage: AssetImage("assets/images/agent.png"),
           ),
         ),
         actions: [

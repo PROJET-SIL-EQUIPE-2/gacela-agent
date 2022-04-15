@@ -41,12 +41,11 @@ class AuthProvider extends AbstractProvider {
       final Map<String, dynamic>? data =
           await authService.login(email, password);
       _user = data?["user"];
-      print(_user);
       if (_user != null) {
         _token = data!["token"];
         _isAuth = true;
         final LocalStorageService localStorageService = LocalStorageService();
-        await localStorageService.saveUser(_token, _user?.id);
+        await localStorageService.saveUser(_token, _user);
       }
     } on Failure catch (f) {
       // error case
@@ -92,9 +91,20 @@ class AuthProvider extends AbstractProvider {
     } else {
       _isAuth = true;
       _token = userData["gacela_token"];
-      _user = Agent(id: int.parse(userData["user_id"]));
+      _user = Agent(
+        id: int.parse(userData["user_id"]),
+        email: userData["email"],
+        familyName: userData["family_name"],
+        name: userData["name"],
+        phoneNumber: userData["phone_number"],
+      );
       notifyListeners();
       return true;
     }
+  }
+
+  Future<bool?> saveNotificationToken(String? token) async {
+    final AuthService authService = AuthService();
+    return await authService.saveNotificationToken(token, user?.id);
   }
 }
