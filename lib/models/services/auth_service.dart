@@ -75,4 +75,38 @@ class AuthService {
       rethrow;
     }
   }
+
+  /// save fcm token
+  /// @param token      fcm token
+  /// @param agentId    agent id
+  /// returns return true if the token is saved else returns a failure
+  Future<bool?> saveNotificationToken(String? token, int? agentId) async {
+    final String url = '${dotenv.get("BASE_URL")}/notifications/save-token';
+    try {
+      final response = await http.put(Uri.parse(url),
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: jsonEncode({
+            "agent_id": agentId,
+            "token": token,
+          }));
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        final data = jsonDecode(response.body);
+        throw Failure(data["errors"][0]["msg"], code: response.statusCode);
+      }
+    } on SocketException {
+      throw Failure('No Internet connection 😑');
+    } on HttpException {
+      throw Failure("Couldn't find the post 😱");
+    } on FormatException {
+      throw Failure("Bad response format 👎");
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+  }
 }

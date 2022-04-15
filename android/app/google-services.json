@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "306339443277",
+    "project_id": "gacela-ad691",
+    "storage_bucket": "gacela-ad691.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306339443277:android:c7039faa53981126392204",
+        "android_client_info": {
+          "package_name": "com.nexcode.gacelaagent.gacela_am"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306339443277-v70m0seohr068u8ngp9ed8kuv5jts7td.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCX2rrvPk4S4eAiS2bOGXfXM8AOw3rwN_Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306339443277-v70m0seohr068u8ngp9ed8kuv5jts7td.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

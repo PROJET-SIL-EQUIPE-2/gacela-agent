@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gacela_am/models/errors/failure.dart';
+import 'package:gacela_am/providers/auth_provider.dart';
+import 'package:gacela_am/providers/profile_provider.dart';
+import 'package:gacela_am/utilities/validation.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:provider/provider.dart';
 import '../../../config/theme/colors.dart';
 import '../../../config/theme/theme.dart';
 import '../../widgets.dart';
@@ -13,6 +19,148 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   bool _modifyPassword = false;
+
+  // loading
+  bool isLoading = false;
+
+  // error message
+  String? errorMessage;
+
+  // success message
+  String? successMessage;
+
+  // password variables
+  String? oldPassword = "";
+  String? newPassword = "";
+  String? newPasswordConfirm = "";
+
+  // email
+  String? newEmail;
+
+  // form
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _emailFormKey = GlobalKey<FormState>();
+
+  _submit() async {
+    ProfileProvider profileProvider = ProfileProvider(
+      agent: Provider.of<AuthProvider>(context, listen: false).user!,
+      token: Provider.of<AuthProvider>(context, listen: false).token!,
+    );
+    // change password case
+    if (_modifyPassword) {
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
+        if (newPassword == newPasswordConfirm) {
+          // change The Password
+          setState(() => isLoading = true);
+          try {
+            Map<String, dynamic> result =
+                await profileProvider.changePassword(oldPassword, newPassword);
+            setState(() {
+              successMessage = result["msg"];
+              errorMessage = null;
+              isLoading = false;
+              _modifyPassword = false;
+            });
+          } on Failure catch (f) {
+            setState(() {
+              errorMessage = f.message;
+              errorMessage = null;
+              isLoading = false;
+            });
+          }
+        } else {
+          setState(() => errorMessage = "Reconfirmer votre mot de passe");
+        }
+      }
+    }
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Changer votre email'),
+          content: Form(
+            key: _emailFormKey,
+            child: SingleChildScrollView(
+              child: ListBody(
+                children: [
+                  gacelaTextField(
+                    labelText: "Adresse e-mail",
+                    onChanged: (value) => newEmail = value,
+                    validator: (value) =>
+                        emailValidation(value, "Email incorrecte"),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                'Retour',
+                style: TextStyle(color: GacelaColors.gacelaRed),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Confimer'),
+              onPressed: () async {
+                ProfileProvider profileProvider = ProfileProvider(
+                  agent:
+                      Provider.of<AuthProvider>(context, listen: false).user!,
+                  token:
+                      Provider.of<AuthProvider>(context, listen: false).token!,
+                );
+
+                // change email
+                if (_emailFormKey.currentState!.validate()) {
+                  _emailFormKey.currentState!.save();
+
+                  try {
+                    Map<String, dynamic> result =
+                        await profileProvider.changeEmail(newEmail);
+                    if (result["success"]) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            result["msg"],
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          backgroundColor: GacelaColors.gacelaGreen,
+                        ),
+                      );
+                    }
+                  } on Failure catch (f) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          f.message,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        backgroundColor: GacelaColors.gacelaRed,
+                      ),
+                    );
+                  }
+                } else {
+                  setState(() {
+                    errorMessage = "Le nouveau email est incorrecte";
+                  });
+                }
+                Navigator.pop(context);
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,134 +179,178 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: GacelaTheme.hPadding,
-            vertical: GacelaTheme.vDivider,
-          ),
-          child: gacelaCard(
-              color: GacelaColors.gacelaLightPurple,
-              child: Column(
-                children: [
-                  ListTile(
-                    onTap: () {},
-                    minVerticalPadding: GacelaTheme.vDivider,
-                    leading: const CircleAvatar(
-                      radius: 25,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage:
-                          NetworkImage("https://i.pravatar.cc/300"),
+      body: Consumer<AuthProvider>(
+        builder: (_, auth, __) => SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: GacelaTheme.hPadding,
+              vertical: GacelaTheme.vDivider,
+            ),
+            child: gacelaCard(
+                color: GacelaColors.gacelaLightPurple,
+                child: Column(
+                  children: [
+                    const Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: GacelaTheme.vPadding),
+                      child: CircleAvatar(
+                        radius: 25,
+                        backgroundColor: Colors.white,
+                        backgroundImage: AssetImage("assets/images/agent.png"),
+                      ),
                     ),
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        Icon(
-                          Icons.camera_alt_outlined,
-                          color: GacelaColors.gacelaPurple,
-                        ),
-                        Text("Mettre à jour la photo")
-                      ],
-                    ),
-                  ),
-                  const Divider(height: 1, color: GacelaColors.gacelaPurple),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: GacelaTheme.hPadding),
-                    child: Row(
-                      children: [
-                        Flexible(
-                          child: gacelaTextField(
-                            labelText: "Nom",
-                            enabled: false,
-                            initialValue: "John",
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        Flexible(
-                          child: gacelaTextField(
-                            labelText: "Prénom",
-                            enabled: false,
-                            initialValue: "Doe",
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: GacelaTheme.vDivider),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: GacelaTheme.hPadding),
-                    child: gacelaTextField(
-                      labelText: "Adresse e-mail",
-                      enabled: false,
-                      initialValue: "useremail@email.com",
-                    ),
-                  ),
-                  const SizedBox(height: GacelaTheme.vDivider),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: GacelaTheme.hPadding),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: gacelaTextField(
-                            labelText: _modifyPassword
-                                ? "Ancien Mot de passe"
-                                : "Mot de passe",
-                            enabled: _modifyPassword,
-                            initialValue:
-                                _modifyPassword ? null : "placeholder",
-                            obscureText: true,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () => setState(
-                              () => _modifyPassword = !_modifyPassword),
-                          icon: const Icon(
-                            Icons.edit,
-                            color: GacelaColors.gacelaOrange,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (_modifyPassword)
+                    const Divider(height: 1, color: GacelaColors.gacelaPurple),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: GacelaTheme.hPadding),
-                      child: Column(
+                      child: Row(
                         children: [
-                          const SizedBox(height: GacelaTheme.vDivider),
-                          gacelaTextField(
-                            labelText: "Nouveau mot de passe",
-                            hintText: "Nouveau mot de passe",
-                            enabled: _modifyPassword,
-                            obscureText: true,
+                          Flexible(
+                            child: gacelaTextField(
+                              labelText: "Nom",
+                              enabled: false,
+                              initialValue: auth.user?.familyName,
+                            ),
                           ),
-                          const SizedBox(height: GacelaTheme.vDivider),
-                          gacelaTextField(
-                            labelText: "Confirmer mot de passe",
-                            hintText: "Confirmer mot de passe",
-                            enabled: _modifyPassword,
-                            obscureText: true,
+                          const SizedBox(width: 20),
+                          Flexible(
+                            child: gacelaTextField(
+                              labelText: "Prénom",
+                              enabled: false,
+                              initialValue: auth.user?.name,
+                            ),
                           ),
                         ],
                       ),
                     ),
-                  const SizedBox(height: GacelaTheme.vDivider),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: GacelaTheme.hPadding),
-                    child: gacelaButton(
-                      onPressed: () {},
-                      text: "Valider",
-                      color: GacelaColors.gacelaPurple,
+                    const SizedBox(height: GacelaTheme.vDivider),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: GacelaTheme.hPadding),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            child: gacelaTextField(
+                              labelText: "Adresse e-mail",
+                              enabled: false,
+                              onChanged: (value) => newEmail = value,
+                              validator: (value) =>
+                                  emailValidation(value, "Email incorrecte"),
+                              initialValue: auth.user?.email,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: _showMyDialog,
+                            icon: const Icon(
+                              Icons.edit,
+                              color: GacelaColors.gacelaOrange,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  )
-                ],
-              )),
+                    const SizedBox(height: GacelaTheme.vDivider),
+                    Form(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: GacelaTheme.hPadding),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Flexible(
+                                  child: gacelaTextField(
+                                    labelText: _modifyPassword
+                                        ? "Ancien Mot de passe"
+                                        : "Mot de passe",
+                                    enabled: _modifyPassword,
+                                    initialValue:
+                                        _modifyPassword ? null : "placeholder",
+                                    obscureText: true,
+                                    onSaved: (value) => oldPassword = value,
+                                    validator: (value) => notEmptyField(
+                                        value,
+                                        8,
+                                        "Le mot de passe doit être +8 caractère"),
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () => setState(
+                                      () => _modifyPassword = !_modifyPassword),
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    color: GacelaColors.gacelaOrange,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          if (_modifyPassword)
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: GacelaTheme.hPadding),
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: GacelaTheme.vDivider),
+                                  gacelaTextField(
+                                      labelText: "Nouveau mot de passe",
+                                      hintText: "Nouveau mot de passe",
+                                      enabled: _modifyPassword,
+                                      obscureText: true,
+                                      onSaved: (value) => newPassword = value,
+                                      validator: (value) => notEmptyField(
+                                          value,
+                                          8,
+                                          "Le mot de passe doit être +8 caractère")),
+                                  const SizedBox(height: GacelaTheme.vDivider),
+                                  gacelaTextField(
+                                      labelText: "Confirmer mot de passe",
+                                      hintText: "Confirmer mot de passe",
+                                      enabled: _modifyPassword,
+                                      obscureText: true,
+                                      onSaved: (value) =>
+                                          newPasswordConfirm = value,
+                                      validator: (value) => notEmptyField(
+                                          value,
+                                          8,
+                                          "Le mot de passe doit être +8 caractère")),
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: GacelaTheme.vDivider),
+                    if (errorMessage != null)
+                      Center(
+                        child: Text(errorMessage!,
+                            style: const TextStyle(
+                                color: GacelaColors.gacelaRed,
+                                fontWeight: FontWeight.w500)),
+                      ),
+                    if (successMessage != null)
+                      Center(
+                        child: Text(successMessage!,
+                            style: const TextStyle(
+                                color: GacelaColors.gacelaGreen,
+                                fontWeight: FontWeight.w500)),
+                      ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: GacelaTheme.hPadding),
+                      child: isLoading
+                          ? const CircularProgressIndicator()
+                          : gacelaButton(
+                              onPressed: _submit,
+                              text: "Valider",
+                              color: GacelaColors.gacelaPurple,
+                            ),
+                    )
+                  ],
+                )),
+          ),
         ),
       ),
     );
