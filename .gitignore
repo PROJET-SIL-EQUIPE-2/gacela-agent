@@ -44,11 +44,5 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
 .env
-=======
-.dart_tool/
-.env
-.flutter-plugins
-.flutter-plugins-dependencies
-.packages
-build/
