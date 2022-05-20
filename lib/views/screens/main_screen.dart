@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:gacela_am/config/theme/colors.dart';
 import 'package:gacela_am/models/errors/failure.dart';
 import 'package:gacela_am/providers/auth_provider.dart';
+import 'package:gacela_am/providers/support_provider.dart';
+import 'package:gacela_am/providers/tasks_provider.dart';
 import 'package:provider/provider.dart';
 import 'navigators.dart';
 
@@ -83,46 +85,56 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _systemBackButtonPressed,
-      child: Scaffold(
-        bottomNavigationBar: Container(
-          clipBehavior: Clip.hardEdge,
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                offset: const Offset(0, 1),
-                blurRadius: 4,
-              )
-            ],
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(25),
-              topRight: Radius.circular(25),
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<TasksProvider>(
+            create: (context) => TasksProvider(),
+          ),
+          ChangeNotifierProvider<SupportProvider>(
+            create: (context) => SupportProvider(),
+          ),
+        ],
+        child: Scaffold(
+          bottomNavigationBar: Container(
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  offset: const Offset(0, 1),
+                  blurRadius: 4,
+                )
+              ],
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
+              ),
+            ),
+            child: BottomNavigationBar(
+              showSelectedLabels: false,
+              showUnselectedLabels: false,
+              selectedItemColor: GacelaColors.gacelaPurple,
+              backgroundColor: Colors.white,
+              elevation: 0,
+              iconSize: 30,
+              items: const [
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.home_outlined), label: 'Home'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.checklist_sharp), label: 'Tasks'),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.local_taxi_outlined), label: 'Cars')
+              ],
+              currentIndex: _currentIndex,
+              onTap: (index) => setState(() => _currentIndex = index),
             ),
           ),
-          child: BottomNavigationBar(
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-            selectedItemColor: GacelaColors.gacelaPurple,
-            backgroundColor: Colors.white,
-            elevation: 0,
-            iconSize: 30,
-            items: const [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.home_outlined), label: 'Home'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.checklist_sharp), label: 'Tasks'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.local_taxi_outlined), label: 'Cars')
-            ],
-            currentIndex: _currentIndex,
-            onTap: (index) => setState(() => _currentIndex = index),
-          ),
+          body: SafeArea(
+              child: IndexedStack(
+            index: _currentIndex,
+            children: _navigators,
+          )),
         ),
-        body: SafeArea(
-            child: IndexedStack(
-          index: _currentIndex,
-          children: _navigators,
-        )),
       ),
     );
   }
