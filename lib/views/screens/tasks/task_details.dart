@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gacela_am/assets/MyIcons.dart';
+import 'package:gacela_am/models/task.dart';
 import 'package:gacela_am/views/widgets/gacela_details_tache.dart';
 import 'package:intl/intl.dart';
 import '../../../config/theme/colors.dart';
 import '../../../config/theme/theme.dart';
-import '../../../assets/MyIcons.dart';
 
 class Taskdetails extends StatelessWidget {
   static const route = "/details_tache";
-  const Taskdetails({Key? key}) : super(key: key);
+  final Task task;
+  const Taskdetails({Key? key, required this.task}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,7 @@ class Taskdetails extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.white,
         title: Text(
-          "Changement de pneu",
+          "Tâche",
           style: Theme.of(context).textTheme.headline2,
         ),
         leading: IconButton(
@@ -31,7 +30,8 @@ class Taskdetails extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: Padding(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.symmetric(horizontal: GacelaTheme.hPadding),
           child: Column(
             children: [
@@ -49,7 +49,8 @@ class Taskdetails extends StatelessWidget {
                       width: 7,
                     ),
                     Text(
-                      DateFormat('KK:mm, yyyy/MM/dd').format(DateTime.now()),
+                      DateFormat('KK:mm, yyyy/MM/dd')
+                          .format(task.date ?? DateTime.now()),
                     ),
                   ],
                 ),
@@ -59,50 +60,51 @@ class Taskdetails extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      gacelaEtatText1(text: "En progrès"),
-                      gacelaEtatText1(text: "élémentaire"),
+                      gacelaEtatText1(
+                          text:
+                              task.progress == 100 ? "Finished" : "En progrès"),
+                      gacelaEtatText1(
+                          text:
+                              task.important == true ? "Important" : "Normal"),
                     ],
                   ),
                   Container(
-                    child: gacelapercent1(progress: 0.3, radius: 50),
+                    child: gacelapercent1(
+                        progress:
+                            task.progress != null ? task.progress! / 100 : 0,
+                        radius: 50),
                   )
                 ],
               ),
-              const SizedBox(
-                height: GacelaTheme.vDivider,
-              ),
-              gacelaLocation(
-                  icon: const Icon(
-                    FontAwesomeIcons.locationPin,
-                  ),
-                  text: "Sidi Youcef, Beni messous",
-                  left: GacelaTheme.vDivider,
-                  top: GacelaTheme.vDivider),
-              gacelaLocation(
-                  icon: const Icon(
-                    MyIcons.vectoro,
-                    // Icons.gps_off_sharp,
-                  ),
-                  text: "36.78596, 47.123478",
-                  left: GacelaTheme.vDivider,
-                  top: GacelaTheme.vDivider / 2 + 2),
-              const SizedBox(
-                height: GacelaTheme.vDivider + 5,
-              ),
+              const SizedBox(height: GacelaTheme.vDivider),
+              // gacelaLocation(
+              //     icon: const Icon(
+              //       FontAwesomeIcons.locationPin,
+              //     ),
+              //     text: "Sidi Youcef, Beni messous",
+              //     left: GacelaTheme.vDivider,
+              //     top: GacelaTheme.vDivider),
+              // gacelaLocation(
+              //     icon: const Icon(
+              //       MyIcons.vectoro,
+              //       // Icons.gps_off_sharp,
+              //     ),
+              //     text: "36.78596, 47.123478",
+              //     left: GacelaTheme.vDivider,
+              //     top: GacelaTheme.vDivider / 2 + 2),
+              const SizedBox(height: GacelaTheme.vDivider + 5),
               gacelaDescription(
-                  title: "title",
-                  description:
-                      " réparation.note: se munit de kit....................."
-                      "réparation.note: se munit de kit"
-                      "réparation.note: se munit de kit"
-                      "réparation.note: se munit de kit"
-                      "réparation.note: se munit de kit"
-                      "réparation.note: se munit de kit....................."
-                      "réparation.note: se munit de kit"),
+                  title: "Task description", description: """${task.description}
+Is blocked: ${task.panne?.blocked}
+Date: ${task.panne?.datePanne}
+Charge: ${task.panne?.charge}%
+Temperature: ${task.panne?.temperature}c°
+Treated: ${task.panne?.treated}"""),
               gacelaDescription1(
-                  title: "Hunday Accent",
-                  type: "classic",
-                  img: Image.asset("assets/images/honda1.jpg")),
+                  title: "Matricule: ${task.panne?.vehicule?.matricule}",
+                  type: "${task.panne?.vehicule?.typeVehicule}",
+                  img: Image.asset(task.panne?.vehicule?.carPhoto ??
+                      "assets/images/honda1.jpg")),
             ],
           ),
         ),

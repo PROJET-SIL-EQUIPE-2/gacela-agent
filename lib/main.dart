@@ -8,8 +8,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.transparent, // navigation bar color
-    statusBarColor: Colors.transparent, // status bar color
+    systemNavigationBarColor: Colors.white, // navigation bar color
+    statusBarColor: Colors.black, // status bar color
   ));
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

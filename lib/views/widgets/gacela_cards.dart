@@ -83,18 +83,21 @@ Widget gacelaListTile({
   );
 }
 
-Widget gacelaListTile1({
-  // Value between 0 and 1
+Widget gacelaListTile1(
+    {
+    // Value between 0 and 1
 
-  required double progress,
-  Color cardColor = GacelaColors.gacelaLightOrange,
-  double radius = 36,
-  required String title,
-  required String description,
-  required void Function()? onPressed,
+    required double progress,
+    Color cardColor = GacelaColors.gacelaLightOrange,
+    double radius = 36,
+    required String title,
+    required String description,
+    required void Function()? onPressed,
+    void Function()? done,
+    void Function()? increment
 
 // ignore: curly_braces_in_flow_control_structures
-}) {
+    }) {
   Color progressColor = GacelaColors.gacelaRed;
 
   if (progress <= 0.3) {
@@ -108,7 +111,7 @@ Widget gacelaListTile1({
   // ignore: unnecessary_new
   return new Slidable(
     // ignore: prefer_const_constructors
-    actionPane: new SlidableDrawerActionPane(),
+    actionPane: SlidableDrawerActionPane(),
     actionExtentRatio: 0.25,
     child: Container(
       margin: const EdgeInsets.only(bottom: GacelaTheme.vDivider),
@@ -153,13 +156,9 @@ Widget gacelaListTile1({
       IconSlideAction(
         caption: 'check',
         icon: Icons.check,
-        onTap: () => {},
+        onTap: done,
       ),
-      IconSlideAction(
-        caption: 'add',
-        icon: Icons.add,
-        onTap: () => {},
-      ),
+      IconSlideAction(caption: 'add', icon: Icons.add, onTap: increment),
     ],
   );
 }
