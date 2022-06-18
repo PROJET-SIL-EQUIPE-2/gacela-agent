@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gacela_am/config/theme/colors.dart';
 import 'package:gacela_am/config/theme/theme.dart';
@@ -20,7 +19,7 @@ Widget gacelaCard({
       width: width,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.circular(borderRadius),
         color: color,
       ),
       child: child,
@@ -65,7 +64,10 @@ Widget gacelaListTile({
           percent: progress,
           center: Text(
             "${(progress * 100).toStringAsFixed(0)}%",
-            style: TextStyle(color: progressColor, fontWeight: FontWeight.w600),
+            style: TextStyle(
+                color: progressColor,
+                fontWeight: FontWeight.w600,
+                fontSize: 10),
           ),
           progressColor: progressColor,
         ),

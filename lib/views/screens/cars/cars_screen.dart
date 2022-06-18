@@ -1,11 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:gacela_am/config/theme/colors.dart';
 import 'package:gacela_am/config/theme/theme.dart';
+import 'package:gacela_am/providers/auth_provider.dart';
+import 'package:gacela_am/providers/cars_provider.dart';
 import 'package:gacela_am/views/screens/cars/car_details_screen.dart';
+import 'package:provider/provider.dart';
 
-class CarsScreen extends StatelessWidget {
+class CarsScreen extends StatefulWidget {
   static const route = "/";
   const CarsScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CarsScreen> createState() => _CarsScreenState();
+}
+
+class _CarsScreenState extends State<CarsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<CarsProvider>(context, listen: false).getAssignedCars(
+        Provider.of<AuthProvider>(context, listen: false).user?.email);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,16 +33,26 @@ class CarsScreen extends StatelessWidget {
           style: Theme.of(context).textTheme.headline2,
         ),
       ),
-      body: ListView(
-        children: const [
-          GacelaCarListItemWidget(
-            carName: "Hyundai classic",
-            carNumber: "1232498887 349984",
-            carType: "Classic",
-            imageUrl: 'assets/images/car1.png',
-          ),
-        ],
-      ),
+      body: Consumer<CarsProvider>(builder: (context, provider, _) {
+        return provider.carsList.isEmpty
+            ? const Center(child: Text("No cars assigned"))
+            : ListView(
+                children: provider.carsList
+                    .map(
+                      (car) => GacelaCarListItemWidget(
+                        carName: "Gacela Car",
+                        carNumber: "${car.matricule}",
+                        carType:
+                            "Locked: ${car.locked != null && car.locked == true ? "Oui" : "Non"}",
+                        imageUrl: 'assets/images/car1.png',
+                        onTap: () => Navigator.pushNamed(
+                            context, CarDetailsScreen.route,
+                            arguments: car),
+                      ),
+                    )
+                    .toList(),
+              );
+      }),
     );
   }
 }
@@ -37,12 +62,14 @@ class GacelaCarListItemWidget extends StatelessWidget {
   final String carNumber;
   final String carType;
   final String imageUrl;
-  const GacelaCarListItemWidget({
+  final void Function()? onTap;
+  GacelaCarListItemWidget({
     Key? key,
     required this.carName,
     required this.carNumber,
     required this.carType,
     required this.imageUrl,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -51,16 +78,9 @@ class GacelaCarListItemWidget extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     const gridSize = 8;
     return GestureDetector(
-      onTap: () => {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => CarDetailsScreen(),
-          ),
-        ),
-      },
+      onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
         margin: const EdgeInsets.only(
             bottom: 10,
             left: GacelaTheme.hPadding,
@@ -123,7 +143,7 @@ class GacelaCarListItemWidget extends StatelessWidget {
                     // Badge
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 3, vertical: 2),
+                          horizontal: 5, vertical: 2),
                       child: Text(
                         carType,
                         style: const TextStyle(

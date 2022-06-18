@@ -23,10 +23,12 @@ class SupportService {
         final data = json.decode(response.body);
         List<dynamic> supportsAsMap = data["data"]["supports"];
         List<Support> supports = [];
-        for (var element in supportsAsMap) {
+
+        for (Map<String, dynamic> element in supportsAsMap) {
           Support support = Support.fromJson(element);
           supports.add(support);
         }
+
         return supports;
       } else {
         final data = jsonDecode(response.body);

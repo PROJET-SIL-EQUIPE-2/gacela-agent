@@ -217,6 +217,7 @@ class _TasksScreenState extends State<TasksScreen> {
           ),
           ListView(
             children: [
+              const SizedBox(height: GacelaTheme.vDivider),
               Column(
                 children: [
                   Consumer<SupportProvider>(

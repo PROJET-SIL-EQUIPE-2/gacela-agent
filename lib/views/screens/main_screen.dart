@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:gacela_am/config/theme/colors.dart';
 import 'package:gacela_am/models/errors/failure.dart';
 import 'package:gacela_am/providers/auth_provider.dart';
+import 'package:gacela_am/providers/cars_provider.dart';
 import 'package:gacela_am/providers/support_provider.dart';
 import 'package:gacela_am/providers/tasks_provider.dart';
 import 'package:provider/provider.dart';
@@ -92,6 +93,9 @@ class _MainScreenState extends State<MainScreen> {
           ),
           ChangeNotifierProvider<SupportProvider>(
             create: (context) => SupportProvider(),
+          ),
+          ChangeNotifierProvider<CarsProvider>(
+            create: (context) => CarsProvider(),
           ),
         ],
         child: Scaffold(

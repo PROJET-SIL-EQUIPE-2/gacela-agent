@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gacela_am/providers/auth_provider.dart';
+import 'package:gacela_am/providers/tasks_provider.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +13,6 @@ import 'profile_screen.dart';
 class HomeScreen extends StatelessWidget {
   static const route = "/";
   const HomeScreen({Key? key}) : super(key: key);
-  final double _globalProgress = 0.7;
 
   @override
   Widget build(BuildContext context) {
@@ -69,19 +69,20 @@ class HomeScreen extends StatelessWidget {
                   backgroundColor: Colors.white,
                   radius: screenSize.width * 0.2,
                   lineWidth: 20.0,
-                  percent: _globalProgress,
+                  percent: Provider.of<TasksProvider>(context).globalProgress,
                   center: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(children: [
                       TextSpan(
-                        text: "${(_globalProgress * 100).toStringAsFixed(0)}%",
+                        text:
+                            "${(Provider.of<TasksProvider>(context).globalProgress * 100).toStringAsFixed(0)}%",
                         style: const TextStyle(
                             color: GacelaColors.gacelaBlue,
                             fontSize: 30,
                             fontWeight: FontWeight.w600),
                       ),
                       const TextSpan(
-                        text: "\nCompleté\naujourd'hui",
+                        text: "\nCompleted",
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.black,
@@ -104,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "9",
+                          "${Provider.of<TasksProvider>(context).tasksNotCompleted}",
                           style: Theme.of(context)
                               .textTheme
                               .headline1!
@@ -156,25 +157,38 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: GacelaTheme.vDivider),
               Column(
-                children: [
-                  gacelaListTile(
-                    progress: 0.3,
-                    title: "Obstacle",
-                    description: "Intervenez pour débloquer le passage",
-                  ),
-                  gacelaListTile(
-                    cardColor: GacelaColors.gacelaPurple,
-                    progress: 0.9,
-                    title: "Obstacle",
-                    description: "Intervenez pour débloquer le passage",
-                  ),
-                  gacelaListTile(
-                    cardColor: GacelaColors.gacelaPurple,
-                    progress: 0.6,
-                    title: "Obstacle",
-                    description: "Intervenez pour débloquer le passage",
-                  ),
-                ],
+                children: Provider.of<TasksProvider>(context).tasks.length <= 3
+                    ? Provider.of<TasksProvider>(context)
+                        .tasks
+                        .map(
+                          (task) => gacelaListTile(
+                            progress: task.progress != null
+                                ? task.progress! / 100
+                                : 0,
+                            cardColor: task.important == true
+                                ? GacelaColors.gacelaOrange
+                                : GacelaColors.gacelaPurple,
+                            title: "Task",
+                            description: "${task.description}",
+                          ),
+                        )
+                        .toList()
+                    : Provider.of<TasksProvider>(context)
+                        .tasks
+                        .sublist(0, 3)
+                        .map(
+                          (task) => gacelaListTile(
+                            progress: task.progress != null
+                                ? task.progress! / 100
+                                : 0,
+                            cardColor: task.important == true
+                                ? GacelaColors.gacelaOrange
+                                : GacelaColors.gacelaPurple,
+                            title: "Task",
+                            description: "${task.description}",
+                          ),
+                        )
+                        .toList(),
               )
             ],
           ),

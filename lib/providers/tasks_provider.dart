@@ -6,10 +6,14 @@ import '../models/panne.dart';
 
 class TasksProvider with ChangeNotifier {
   List<Task> tasks = [];
+  double globalProgress = 0;
+  int tasksNotCompleted = 0;
+  int carsNumber = 0;
 
   Future<bool> getAllTasks(String? token, int? agentId) async {
     final TasksService tasksService = TasksService();
     tasks = await tasksService.getAllTasks(token, agentId);
+    calculateProgress();
     notifyListeners();
     return true;
   }
@@ -38,6 +42,8 @@ class TasksProvider with ChangeNotifier {
       return true;
     } else {
       tasks[index].progress = (tasks[index].progress! - 10);
+
+      calculateProgress();
       notifyListeners();
       return false;
     }
@@ -62,5 +68,16 @@ class TasksProvider with ChangeNotifier {
       notifyListeners();
       return false;
     }
+  }
+
+  calculateProgress() {
+    int total = 0;
+    int incompletedTasksNumber = 0;
+    tasks.forEach((element) {
+      total += element.progress ?? 0;
+      if (!element.completed!) incompletedTasksNumber++;
+    });
+    globalProgress = total / (100 * tasks.length);
+    tasksNotCompleted = incompletedTasksNumber;
   }
 }
