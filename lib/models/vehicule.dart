@@ -1,9 +1,3 @@
-import 'dart:convert';
-
-Vehicule vehiculeFromJson(String str) => Vehicule.fromJson(json.decode(str));
-
-String vehiculeToJson(Vehicule data) => json.encode(data.toJson());
-
 class Vehicule {
   Vehicule({
     this.vehiculeId,
@@ -22,7 +16,7 @@ class Vehicule {
   String? matricule;
   dynamic carPhoto;
   int? responsable;
-  String? typeVehicule;
+  int? typeVehicule;
   int? kilometrage;
   String? etat;
   bool? disponible;

@@ -190,9 +190,9 @@ Widget gacelaDescription1({
         boxShadow: [
           // ignore: prefer_const_constructors
           BoxShadow(
-            color: Colors.grey,
-            blurRadius: 20,
-            offset: const Offset(4, 4),
+            color: Colors.black12,
+            blurRadius: 8,
+            offset: const Offset(2, 4),
           ),
         ],
       ),
@@ -206,12 +206,10 @@ Widget gacelaDescription1({
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(
-                      left: GacelaTheme.vDivider,
-                      top: GacelaTheme.vDivider / 2),
-                  padding: const EdgeInsets.only(left: GacelaTheme.vDivider),
+                  margin: const EdgeInsets.only(top: 10),
                   // ignore: prefer_const_constructors
                   decoration: BoxDecoration(
                     color: GacelaColors.gacelaGreyClair,
@@ -230,6 +228,7 @@ Widget gacelaDescription1({
                   width: 100,
 
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Center(
                         child: Text(

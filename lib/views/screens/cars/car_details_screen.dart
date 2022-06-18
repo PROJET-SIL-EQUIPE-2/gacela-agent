@@ -2,15 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:gacela_am/config/theme/colors.dart';
-import 'package:flutter/material.dart';
 import 'package:gacela_am/config/theme/theme.dart';
-import 'package:gacela_am/views/screens/home/home_screen.dart';
+import 'package:gacela_am/models/vehicule.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../config/theme/colors.dart';
 import '../../widgets.dart';
-import "package:flutter_svg/flutter_svg.dart";
 
 class CarDetailsScreen extends StatefulWidget {
-  CarDetailsScreen({Key? key}) : super(key: key);
+  static const route = "/detail";
+  final Vehicule? car;
+  const CarDetailsScreen({Key? key, required this.car}) : super(key: key);
 
   @override
   State<CarDetailsScreen> createState() => _CarDetailsScreenState();
@@ -51,7 +52,7 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
           children: [
             Column(
               children: [
-                Text("Hyundai classic",
+                Text("Gacela Car",
                     style: Theme.of(context)
                         .textTheme
                         .headline3!
@@ -106,17 +107,17 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           horizontal: GacelaTheme.hPadding,
                         ),
                         child: Row(
-                          children: const [
+                          children: [
                             // ignore: todo
                             // TODO: Change this to SVG picture
-                            Icon(
+                            const Icon(
                               Icons.car_rental,
                               color: GacelaColors.gacelaDarkGrey,
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Text(
-                              "23454546566677 43433",
-                              style: TextStyle(
+                              "${widget.car?.matricule}",
+                              style: const TextStyle(
                                 fontSize: 20,
                                 color: GacelaColors.gacelaDarkGrey,
                               ),
@@ -124,30 +125,8 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: GacelaTheme.hPadding),
-                        child: Row(
-                          children: [
-                            Container(
-                                margin: const EdgeInsets.only(right: 8.0),
-                                child: const Icon(
-                                  Icons.location_on,
-                                  color: GacelaColors.gacelaDarkGrey,
-                                )),
-                            const Text(
-                              "Sidi youcef, Beni messous",
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: GacelaColors.gacelaDarkGrey,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      // Map
-
                       Container(
+                        clipBehavior: Clip.hardEdge,
                         margin: const EdgeInsets.symmetric(
                             vertical: GacelaTheme.vDivider,
                             horizontal: GacelaTheme.hPadding),
@@ -156,7 +135,14 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           borderRadius: BorderRadius.circular(
                             20,
                           ),
-                          color: GacelaColors.gacelaGreen,
+                        ),
+                        child: const GoogleMap(
+                          zoomControlsEnabled: false,
+                          markers: {},
+                          initialCameraPosition: CameraPosition(
+                            target: LatLng(36.35, 6.6),
+                            zoom: 14,
+                          ),
                         ),
                       ),
                       ///////
@@ -169,13 +155,13 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
                             CarInfoWidget(
-                                infoType: "infoType",
+                                infoType: "Temperature",
                                 value: "value",
-                                unity: "unity"),
+                                unity: "c"),
                             CarInfoWidget(
-                                infoType: "infoType",
+                                infoType: "Speed",
                                 value: "value",
-                                unity: "unity")
+                                unity: "km/h")
                           ],
                         ),
                       ),
@@ -187,61 +173,57 @@ class _CarDetailsScreenState extends State<CarDetailsScreen>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: const [
                             CarInfoWidget(
-                                infoType: "infoType",
-                                value: "value",
-                                unity: "unity"),
+                                infoType: "Charge", value: "value", unity: "%"),
                             CarInfoWidget(
-                                infoType: "infoType",
-                                value: "value",
-                                unity: "unity")
+                                infoType: "location",
+                                value: "lat,lng",
+                                unity: "")
                           ],
                         ),
                       ),
                       const SizedBox(height: GacelaTheme.vPadding),
                     ],
                   ),
-                  Container(
-                    child: ListView(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: GacelaTheme.hPadding),
-                          child: Column(
-                            children: [
-                              const SizedBox(height: GacelaTheme.vDivider),
-                              Column(
-                                children: [
-                                  circumstance(
-                                    title: "Obstacle",
-                                    description: "Barrière",
-                                    IconName: "assets/icons/obstacle.svg",
-                                    onPressed: () => {},
-                                  ),
-                                  circumstance(
-                                    title: "Pneus",
-                                    description: "Crevés",
-                                    IconName: "assets/icons/pneu.svg",
-                                    onPressed: () => {},
-                                  ),
-                                  circumstance(
-                                    title: "En retour vers le parc",
-                                    description: "3 KM restants",
-                                    IconName: "assets/icons/enRetour.svg",
-                                    onPressed: () => {},
-                                  ),
-                                  circumstance(
-                                    title: "Route",
-                                    description: "En circulation",
-                                    IconName: "assets/icons/route.svg",
-                                    onPressed: () => {},
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                  ListView(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: GacelaTheme.hPadding),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: GacelaTheme.vDivider),
+                            Column(
+                              children: [
+                                circumstance(
+                                  title: "Obstacle",
+                                  description: "Barrière",
+                                  IconName: "assets/icons/obstacle.svg",
+                                  onPressed: () => {},
+                                ),
+                                circumstance(
+                                  title: "Pneus",
+                                  description: "Crevés",
+                                  IconName: "assets/icons/pneu.svg",
+                                  onPressed: () => {},
+                                ),
+                                circumstance(
+                                  title: "En retour vers le parc",
+                                  description: "3 KM restants",
+                                  IconName: "assets/icons/enRetour.svg",
+                                  onPressed: () => {},
+                                ),
+                                circumstance(
+                                  title: "Route",
+                                  description: "En circulation",
+                                  IconName: "assets/icons/route.svg",
+                                  onPressed: () => {},
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                   ListView(
                     children: [
