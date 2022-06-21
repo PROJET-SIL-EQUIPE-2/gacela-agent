@@ -80,7 +80,7 @@ class GacelaCarListItemWidget extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
         margin: const EdgeInsets.only(
             bottom: 10,
             left: GacelaTheme.hPadding,
